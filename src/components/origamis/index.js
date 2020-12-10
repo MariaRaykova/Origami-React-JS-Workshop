@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import styles from './index.module.css';
+import Origami from '../origami'
 
 
 class Origamis extends Component {
@@ -21,24 +22,24 @@ class Origamis extends Component {
     componentDidMount() {
         this.getOrigamis() //след като дойде целия рекуест ъпдейтваме оригамито
     }
-    renderOrigamis(){
+    renderOrigamis() {
         const { origamis } = this.state
+
         return origamis.map(origami => {
             return (
-                <div key={origami._id}>
-                    {origami.description}
-                </div>
+            <Origami key={origami._id} {...origami}/> //тук вече ще подадем key-я и ще му върнем вс пропъртита надолу
             )
-        })}
+        })
+    }
 
     render() {
         console.log(this.state.origamis) //да видим всички оригамис
-        
+
         return (
             <main className={styles.main}>
                 <h1>Origamis</h1>
-                <div className={styles.posts}> 
-                  {this.renderOrigamis()}
+                <div className={styles.posts}>
+                    {this.renderOrigamis()}
                 </div>
             </main>
         )
