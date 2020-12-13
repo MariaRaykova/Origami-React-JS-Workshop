@@ -1,18 +1,21 @@
 import React from 'react'
-import styles from './index.module.css';
-import Link from '../link'
+import styles from './index.module.css'
+import LinkComponent from '../link'
 import logo from '../../images/white-origami-bird.png'
+import getNavigation from '../../utils/navigation'
 
 const Header = () => {
+    const links = getNavigation()
     return (
         <header className={styles.navigation}>
             <img className={styles.logo} src={logo}/>
-             <Link href="#" title="Going to 1" type="header"/>
-             <Link href="#" title="Going to 2" type="header"/>
-             <Link href="#" title="Going to 3" type="header"/>
-             <Link href="#" title="Going to 4" type="header"/>
-             <Link href="#" title="Going to 5" type="header"/>
-             <Link href="#" title="Going to 6" type="header"/>
+            {
+                links.map(nav =>{
+                    return(
+                        <LinkComponent key={nav.title} href={nav.link} title={nav.title} type="header"/>
+                    )
+                })
+            }
         </header>
     )
 }

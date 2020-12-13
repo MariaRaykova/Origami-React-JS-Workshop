@@ -1,18 +1,20 @@
 import React from 'react'
 import styles from './index.module.css';
-import Link from '../link'
+import LinkComponent from '../link'
 import logo from '../../images/blue-origami-bird-flipped.png'
-
+import getNavigation from '../../utils/navigation'
 const Footer = () => {
+    const links = getNavigation()
     return (
         <footer className={styles.footer}>
            <img className={styles.img} src={logo}/>
-             <Link href="#" title="Going to 1" type="footer"/>
-             <Link href="#" title="Going to 2" type="footer"/>
-             <Link href="#" title="Going to 3" type="footer"/>
-             <Link href="#" title="Going to 4" type="footer"/>
-             <Link href="#" title="Going to 5" type="footer"/>
-             <Link href="#" title="Going to 6" type="footer"/>
+           {
+                links.map(nav =>{
+                    return(
+                        <LinkComponent key={nav.title} href={nav.link} title={nav.title} type="footer"/>
+                    )
+                })
+            }
         </footer>
     )
 }
