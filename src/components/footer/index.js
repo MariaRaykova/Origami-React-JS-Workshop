@@ -7,7 +7,8 @@ const Footer = () => {
     const links = getNavigation()
     return (
         <footer className={styles.footer}>
-           <img className={styles.img} src={logo}/>
+           <img className={styles.img} src={logo} alt="logo"/>
+
            {
                 links.map(nav =>{
                     return(
@@ -15,6 +16,7 @@ const Footer = () => {
                     )
                 })
             }
+      
         </footer>
     )
 }

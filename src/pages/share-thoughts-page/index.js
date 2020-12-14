@@ -11,7 +11,7 @@ function ShareThoughtsPage() {
     <PageWrapper>
       <div className={styles.input}>
       <Title title="Share your thougths..." />
-      <textarea></textarea>
+      <textarea className={styles.textarea} defaultValue="Publication..." />
       <SubmitButton title="Post"/>
       </div>
       <div>

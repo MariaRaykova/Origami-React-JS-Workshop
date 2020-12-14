@@ -8,7 +8,8 @@ const Header = () => {
     const links = getNavigation()
     return (
         <header className={styles.navigation}>
-            <img className={styles.logo} src={logo}/>
+            <img className={styles.logo} src={logo} alt="logo"/>
+          
             {
                 links.map(nav =>{
                     return(
@@ -16,6 +17,7 @@ const Header = () => {
                     )
                 })
             }
+          
         </header>
     )
 }

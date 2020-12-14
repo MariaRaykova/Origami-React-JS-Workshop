@@ -5,7 +5,7 @@ import logo from '../../images/blue-origami-bird.png'
 const Origami = ({ description, author, index }) => {
     return (
         <div className={styles.post}>
-        <img className={styles.img} src={logo} />
+        <img className={styles.img} src={logo} alt="logo"/>
             <p className={styles.description}>
             <span>{index} - </span>
                 {description}
