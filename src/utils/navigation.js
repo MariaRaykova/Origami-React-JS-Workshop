@@ -1,8 +1,8 @@
 
-const getNavigation = (userId) => { //тази функция ще връща Link-овете
+const getNavigation = (loggedIn, user) => { 
 
 
-    const links = [
+    const authLinks = [
         {
             title: 'Publications',
             link: '/'
@@ -13,7 +13,14 @@ const getNavigation = (userId) => { //тази функция ще връща Li
         },
         {
             title: 'Profile',
-            link: `/profile/${userId}`
+            link: `/profile/${user && user.id}` 
+        },
+       
+    ]
+    const guestLinks = [
+        {
+            title: 'Publications',
+            link: '/'
         },
         {
             title: 'Register',
@@ -24,6 +31,6 @@ const getNavigation = (userId) => { //тази функция ще връща Li
             link: '/login'
         }
     ]
-    return links
+    return loggedIn ? authLinks : guestLinks
 }
 export default getNavigation

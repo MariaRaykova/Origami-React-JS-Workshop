@@ -7,27 +7,27 @@ class Posts extends Component {
     constructor(props) {
         super(props)
 
-        this.state = { //инициализираме си стейта 
-            origamis: [] //има оригамис празен масив по дефолт
+        this.state = { 
+            origamis: [] 
         }
     }
     getOrigamis = async () => {
         const { length } = this.props
-        const promise = await fetch(`http://localhost:9999/api/origami?length=${length}`) //await-ваме самия фетч, изчакваме да имаме респонс и след това го закачаме на стейта 
-        const origamis = await promise.json() //фетча връща промис и ние трябва да вземем респонса
+        const promise = await fetch(`http://localhost:9999/api/origami?length=${length}`) 
+        const origamis = await promise.json() 
         this.setState({
-            origamis //но нямаме сет Стейт още за това правим и конструктора
+            origamis 
         })
     }
     componentDidMount() {
-        this.getOrigamis(this.props) //след като дойде целия рекуест ъпдейтваме оригамито
+        this.getOrigamis(this.props) 
     }
     renderOrigamis() {
         const { origamis } = this.state
 
         return origamis.map((origami, index) => {
             return (
-                <Origami key={origami._id} index={index} {...origami} /> //тук вече ще подадем key-я и ще му върнем вс пропъртита надолу
+                <Origami key={origami._id} index={index} {...origami} /> 
             )
         })
     }

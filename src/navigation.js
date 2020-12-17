@@ -38,4 +38,4 @@ const LazyNavigation = () => {
     )
 }
 
-export default LazyNavigation
+export default Navigation
