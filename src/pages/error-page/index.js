@@ -3,8 +3,6 @@ import styles from './index.module.css'
 import Title from '../../components/title'
 import PageWrapper from '../../page-wrapper'
 
-
-
 function ErrorPage() {
   return (
     <PageWrapper>

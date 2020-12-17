@@ -3,7 +3,7 @@ import styles from './index.module.css'
 
 const SubmitButton = ({ title }) => {
     return (
-        <button className={styles.button}>{title}</button>
+        <button className={styles.button} type="submit">{title}</button>
     )
 }
 export default SubmitButton
