@@ -6,5 +6,4 @@ const UserContext = React.createContext({
     logIn: () => {},
     logOut: () => {}
 })
-
 export default UserContext

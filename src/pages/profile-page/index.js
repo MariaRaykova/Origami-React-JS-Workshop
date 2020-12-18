@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import styles from './index.module.css'
 import PageWrapper from '../../page-wrapper'
 import Posts from '../../components/posts'
+import UserContext from '../../context'
 
 
 class ProfilePage extends Component {
@@ -13,6 +14,7 @@ class ProfilePage extends Component {
             posts: null
         }
     }
+    static contextType = UserContext
     componentDidMount() {
         this.getUser(this.props.match.params.userid)
     }
@@ -23,6 +25,10 @@ class ProfilePage extends Component {
             username: user.username,
             posts: user.posts && user.posts.length
         })
+    }
+    logOut = () => {
+        this.context.logOut()
+        this.props.history.push('/')
     }
 
     render() {
@@ -40,6 +46,7 @@ class ProfilePage extends Component {
                             <span>Posts: </span>
                             {posts}
                         </p>
+                        <button onClick={this.logOut}>Logout</button>
                     </div>
                     <div>
                         <h2 className={styles.h2}>3 of your recent posts</h2>
