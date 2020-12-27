@@ -1,44 +1,30 @@
-import React, { Component } from 'react'
+import React, { useState, useCallback, useEffect } from 'react'
 import styles from './index.module.css'
 import Origami from '../origami'
+import getOrigamis from '../../utils/origamis'
 
-class Posts extends Component {
-
-    constructor(props) {
-        super(props)
-
-        this.state = { 
-            origamis: [] 
-        }
-    }
-    getOrigamis = async () => {
-        const { length } = this.props
-        const promise = await fetch(`http://localhost:9999/api/origami?length=${length}`) 
-        const origamis = await promise.json() 
-        this.setState({
-            origamis 
-        })
-    }
-    componentDidMount() {
-        this.getOrigamis(this.props) 
-    }
-    renderOrigamis() {
-        const { origamis } = this.state
-
-        return origamis.map((origami, index) => {
+const Posts = (props) => {
+    const [posts, setPosts] = useState([])
+    const getPosts = useCallback(async () => {
+        const posts = await getOrigamis(props.length)
+        setPosts(posts) 
+    }, [props.length])
+    const renderPosts = () => {
+        return posts.map((post, index) => {
             return (
-                <Origami key={origami._id} index={index} {...origami} /> 
+                <Origami key={post._id} index={index} {...post} /> 
             )
         })
     }
+    useEffect(()=>{
+        getPosts()
+    },[props.updatedPosts, getPosts]) 
 
-    render() {
-        return (
-            <div className={styles.posts}>
-                {this.renderOrigamis()}
-            </div>
-        )
-    }
+    return(
+        <div className={styles.posts}>
+        {renderPosts()}
+    </div>
+    )
 }
 
 export default Posts;

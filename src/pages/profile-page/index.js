@@ -1,62 +1,69 @@
-import React, { Component } from 'react'
+import React, { useState, useEffect, useContext, useCallback } from 'react'
+import { useParams, useHistory } from 'react-router-dom'
 import styles from './index.module.css'
 import PageWrapper from '../../page-wrapper'
 import Posts from '../../components/posts'
 import UserContext from '../../context'
+import ErrorBoundary from '../../error-boundery'
 
+const ProfilePage = () => {
+    const [username, setUsername] = useState(null)
+    const [posts, setPosts] = useState(null)
+    const context = useContext(UserContext)
+    const params = useParams()
+    const history = useHistory()
 
-class ProfilePage extends Component {
-    constructor(props) {
-        super(props)
-
-        this.state = {
-            username: null,
-            posts: null
+    const getData = useCallback(async () => {
+        const id = params.userid
+        const response = await fetch(`http://localhost:9999/api/user?id=${id}`)
+        if (!response.ok) {
+            history.push('/error')
+        } else {
+            const user = await response.json()
+            setUsername(user.username)
+            setPosts(user.posts)
         }
-    }
-    static contextType = UserContext
-    componentDidMount() {
-        this.getUser(this.props.match.params.userid)
-    }
-    getUser = async (id) => {
-        const promise = await fetch(`http://localhost:9999/api/user?id=${id}`)
-        const user = await promise.json()
-        this.setState({
-            username: user.username,
-            posts: user.posts && user.posts.length
-        })
-    }
-    logOut = () => {
-        this.context.logOut()
-        this.props.history.push('/')
+    }, [params.userid, history]) 
+
+    useEffect(() => { 
+        getData()
+    }, []) 
+
+    const logOut = () => {
+        context.logOut()
+        history.push('/')
     }
 
-    render() {
-        const { username, posts } = this.state
+    if (!username) {
         return (
-            < PageWrapper>
-                <div className={styles.profile}>
-                    <img className={styles.img} src="" alt="profile" />
-                    <div className={styles.info}>
-                        <p className={styles.p}>
-                            <span>Username: </span>
-                            {username}
-                        </p>
-                        <p className={styles.p}>
-                            <span>Posts: </span>
-                            {posts}
-                        </p>
-                        <button onClick={this.logOut}>Logout</button>
-                    </div>
-                    <div>
-                        <h2 className={styles.h2}>3 of your recent posts</h2>
-                        <Posts length={3} />
-                    </div>
-
-                </div>
+            <PageWrapper>
+                <div>Loading...</div>
             </PageWrapper>
-
         )
     }
+    return (
+        < PageWrapper>
+            <div className={styles.profile}>
+                <img className={styles.img} src="" alt="profile" />
+                <div className={styles.info}>
+                    <p className={styles.p}>
+                        <span>Username: </span>
+                        {username}
+                    </p>
+                    <p className={styles.p}>
+                        <span>Posts: </span>
+                        {posts}
+                    </p>
+                    <button onClick={logOut}>Logout</button>
+                </div>
+                <div>
+                    <ErrorBoundary>
+                        <h2 className={styles.h2}>3 of your recent posts</h2>
+                        <Posts length={3} />
+                    </ErrorBoundary>
+                </div>
+            </div>
+        </PageWrapper>
+    )
 }
 export default ProfilePage;

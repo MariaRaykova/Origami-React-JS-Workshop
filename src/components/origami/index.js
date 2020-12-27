@@ -8,7 +8,7 @@ const Origami = ({ description, author, index }) => {
         <img className={styles.img} src={logo} alt="logo"/>
             <p className={styles.description}>
             <span>{index} - </span>
-                {description}
+                <div>{description}</div> 
             </p>
             <div className={styles["post-div"]}>
                 <span className={styles.user}>

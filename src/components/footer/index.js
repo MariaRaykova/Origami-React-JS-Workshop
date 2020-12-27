@@ -8,8 +8,8 @@ import getNavigation from '../../utils/navigation'
 class Footer extends Component {
     static contextType = UserContext
     render() {
-        const { loggedIn, user } = this.context
-        const links = getNavigation(loggedIn, user)
+        const {  user } = this.context
+        const links = getNavigation( user)
         return (
             <footer className={styles.footer}>
                 <img className={styles.img} src={logo} alt="logo" />
