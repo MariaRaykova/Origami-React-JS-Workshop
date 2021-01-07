@@ -1,58 +1,33 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import UserContext from './context'
-import getCookie from './utils/cookie'
 
 const App = (props) => {
-    const [user, setUser] = useState(null) 
-    const [loading, setLoading] = useState(true)
+    const [user, setUser] = useState(props.user ? {
+        ...props.user,
+        loggedIn: true
+    } : null)
+    const posts = props.posts || []
 
-    const logIn = (user) => {
-        setUser({ 
-            ...user, 
+    const logIn = (userObject) => {
+        setUser({
+            ...userObject,
             loggedIn: true
         })
     }
+    
     const logOut = () => {
         document.cookie = "x-auth-token=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         setUser({
-            loggedIn: false 
+            loggedIn: false
         })
     }
-  
-    useEffect(() => {
-        const token = getCookie('x-auth-token')
- 
-        if (!token) {
-            setLoading(false)
-            logOut()
-            return
-        }
-        fetch('http://localhost:9999/api/user/verify', {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': token
-            }
-        }).then(promise => {
-            return promise.json()
-        }).then(response => {
-            if (response.status) {
-                logIn({
-                    username: response.user.username,
-                    id: response.user._id
-                })
-            } else {
-                logOut()
-            }
-            setLoading(false) 
-        })
-    }, []) 
-    
+
     return (
         <UserContext.Provider value={{
             user,
             logIn: logIn,
-            logOut: logOut
+            logOut: logOut,
+            posts
         }}>
             {props.children}
         </UserContext.Provider>

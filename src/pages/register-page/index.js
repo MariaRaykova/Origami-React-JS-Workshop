@@ -1,4 +1,5 @@
-import React, { useState, useContext, useHistory } from 'react'
+import React, { useState, useContext,  } from 'react'
+import { useHistory } from 'react-router-dom'
 import styles from './index.module.css'
 import Title from '../../components/title'
 import PageWrapper from '../../page-wrapper'
@@ -16,7 +17,7 @@ const RegisterPage = () => {
 
     const handleSubmit = async (event) => {
         event.preventDefault()
-        const { username, password } = this.state
+   
 
         await authenticate(
             'http://localhost:9999/api/user/register',
